@@ -1,41 +1,29 @@
-import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Box extends ArrayList {
+public class Box <T extends Fruit> {
 
     private float mass; // масса корзины
+    public List<T> list = new ArrayList<T>();
 
     //вспомогательный метод, определяющий индекс последнего в массиве элемента
     protected int lastIndex(){
-        return size()-1;
+        return list.size()-1;
     }
 
     //метод добавления яблока в корзину
-    public void addApple(Apple apple){
-        if (isEmpty() || get(lastIndex()) instanceof Apple ) {
-            add(apple);
-        } else {
-            System.out.println("Нельзя добавлять яблоко к апельсинам!");
-        }
-    }
-
-    //метод добавления апельсина в корзину
-    public void addOrange(Orange orange){
-        if (isEmpty() || get(lastIndex()) instanceof Orange ) {
-            add(orange);
-        } else {
-            System.out.println("Нельзя добавлять апельсин к яблокам!");
-        }
+    public void addFruit(T fruit){
+            list.add(fruit);
     }
 
     //метод расчёта массы корзины
     public float getWeight(){
-        if (isEmpty()) {
+        if (list.isEmpty()) {
             mass = 0;
-        } else if (get(lastIndex()) instanceof Apple) {
-            mass = size()*Apple.Weight;
+        } else if (list.get(lastIndex()) instanceof Apple) {
+            mass = list.size()*Apple.Weight;
         } else {
-            mass = size()*Orange.Weight;
+            mass = list.size()*Orange.Weight;
         }
         return mass;
     }
@@ -49,13 +37,13 @@ public class Box extends ArrayList {
         }
     }
 
-    public void fillFrom (Box box) {
+    public void fillFrom (Box<T> box) {
 
-        if (box.isEmpty()) {                                   //если донорская корзина пуста
-            return;                                            //прерываемся, ибо продолжать бессмысленно
-        } else if (isEmpty() || (get(0).equals(box.get(0)))) { //если же целевая корзина пуста или в обеих корзинах лежат одинаковые фрукты
-            addAll(box);                                       //пересыпаем содержимое
-            box.removeAll(box);                                //и чистим донорскую корзину
+        if (box.list.isEmpty()) {                                                //если донорская корзина пуста
+            return;                                                              //прерываемся, ибо продолжать бессмысленно
+        } else if (list.isEmpty() || (list.get(0).equals(box.list.get(0)))) {    //если же целевая корзина пуста или в обеих корзинах лежат одинаковые фрукты
+            list.addAll(box.list);                                               //пересыпаем содержимое
+            box.list.removeAll(box.list);                                        //и чистим донорскую корзину
         } else {
             System.out.println("Нельзя смешивать яблоки и апельсины!");
         }

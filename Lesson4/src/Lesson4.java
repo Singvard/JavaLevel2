@@ -30,23 +30,21 @@ public class Lesson4 {
         task1.printArr();
         task1.countRepeated();
         task1.selectDistinct();
-        task1.printArr();
-        task1.countRepeated();
 
         //Задание 2
-        HashMap<String, String> hm= new HashMap<>();
-        PhoneBook ph = new PhoneBook(hm);
-        ph.add("+79991231212","Иванов");
-        ph.add("+79991231234","Петров");
-        ph.add("+79991234567","Сидоров");
-        ph.add("+79991232121","Иванов");
-        ph.add("+79991230000","Козлов");
-        ph.add("+79991231221","Иванов");
-        ph.add("+79991239999","Сидоров");
+        HashMap<String, ArrayList<String>> hm= new HashMap<>();
+        PhoneBook ph = new PhoneBook();
+        ph.add("Иванов","+79991231212");
+        ph.add("Петров","+79991231234");
+        ph.add("Сидоров","+79991234567");
+        ph.add("Иванов","+79991232121");
+        ph.add("Козлов","+79991230000");
+        ph.add("Иванов","+79991231221");
+        ph.add("Сидоров","+79991239999");
 
         ph.get("Козлов");
         ph.get("Сидоров");
-        ph.get("Петров");
+        ph.get("Петрова");
         ph.get("Иванов");
     }
 }

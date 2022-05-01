@@ -1,22 +1,33 @@
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class PhoneBook {
-    HashMap<String, String> hm= new HashMap<>();
+    HashMap<String, ArrayList<String>> hm = new HashMap<>();
 
-    public PhoneBook(HashMap<String, String> hm) {
-        this.hm = hm;
-    }
-
-    public void add(String mobilePhone, String lastName) {
-        hm.put(mobilePhone, lastName);
+    public void add(String lastName, String mobilePhone) {
+        ArrayList<String> tmp;
+        if (hm.containsKey(lastName)) {
+            tmp = hm.get(lastName);
+            tmp.add(mobilePhone);
+            hm.put(lastName, tmp);
+        } else {
+            tmp = new ArrayList<>();
+            tmp.add(mobilePhone);
+            hm.put(lastName,tmp);
+        }
     }
 
     public void get(String lastName) {
-        for (Map.Entry entry: hm.entrySet()) {
-            if (entry.getValue() == lastName) {
-                System.out.println(entry.getValue() + ": " + entry.getKey());
+        String resultStr = "";
+        if (hm.containsKey(lastName)) {
+            ArrayList<String> result = new ArrayList<>(hm.get(lastName));
+            resultStr += "Фамилии " + lastName + " сотвествует:\n";
+            for (String s : result) {
+                resultStr += s + "\n";
             }
+        } else {
+            resultStr = "Абонент " + lastName + " не найден\n";
         }
+        System.out.println(resultStr);
     }
 }

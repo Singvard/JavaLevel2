@@ -1,33 +1,21 @@
 import com.google.gson.Gson;
 
+import java.util.Date;
 import java.util.List;
 
 public class Lesson6 {
 
     public static void main(String[] args) {
 
-        System.out.println(Weather.getHTTP());
         Gson g = new Gson();
         Forecast forecast = g.fromJson(Weather.getHTTP(),Forecast.class);
 
-        System.out.println("\nПрогноз погоды в Оренбурге на ближайшие 5 дней:");
-        System.out.println("Широта: " + forecast.lat);
-        System.out.println("Долгота: " + forecast.lon);
-        System.out.println("Часовой пояс: " + forecast.timezone + " (+" + forecast.timezone_offset / 3600 + " часов)\n");
+        for (int i = 0; i < 8; i++) {
+            Date date = new Date((long) forecast.daily.get(i).dt * 1000);
 
-        for (int i = 0; i < 6; i++) {
-            java.util.Date date = new java.util.Date((long) forecast.daily.get(i).dt * 1000);
-            System.out.println("Прогноз на дату: " + date);
-            System.out.println("Ожидаемая погода: " + forecast.daily.get(i).weather.get(0).description);
-            System.out.println("Температура ночью: +" + Math.round(forecast.daily.get(i).temp.night) +
-                    " (по ощущениям +" + Math.round(forecast.daily.get(i).feels_like.night) + ")");
-            System.out.println("Температура днём: +" + Math.round(forecast.daily.get(i).temp.day) +
-                    " (по ощущениям +" + Math.round(forecast.daily.get(i).feels_like.day) + ")");
-            System.out.println("Скорость ветра: " + Math.round(forecast.daily.get(i).wind_speed) + " м/сек");
-            System.out.println("Влажность воздуха: " + forecast.daily.get(i).humidity + "%");
-            System.out.println();
+            System.out.println("В городе Оренбург на дату " + date + " ожидается " + forecast.daily.get(i).weather.get(0).description +
+                    ", температура " + Math.round(forecast.daily.get(i).temp.day));
         }
-
     }
 
     class Forecast {

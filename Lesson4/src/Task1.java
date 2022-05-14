@@ -1,11 +1,8 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 public class Task1 {
 
-    protected int count;
     private List<String> arr = new ArrayList<>();
 
     public Task1(List<String> arr) {
@@ -13,37 +10,35 @@ public class Task1 {
     }
 
     public void selectDistinct(){
-        Collections.sort(arr);
-        for (int i = 0; i < arr.size()-1; i++) {
-            if (arr.get(i) == arr.get(i+1)) {
-                arr.remove(i);
-                i =-1;
-            }
+        Set<String> unique = new HashSet<>(arr);
+        System.out.println("\nМассив без повторений: ");
+        for(String s : unique) {
+            System.out.println(s);
         }
+        System.out.println();
     }
 
     public void printArr(){
         System.out.println("Массив состоит из элементов: ");
-        for (int i = 0; i < arr.size(); i++){
-            System.out.println(arr.get(i));
+        for (String s : arr){
+            System.out.println(s);
         }
     }
 
     public void countRepeated(){
-        Collections.sort(arr);
-        count = 1;
-        for (int i = 0; i < arr.size()-1; i++) {
-            if (arr.get(i) == arr.get(i+1) && (i+1) != arr.size()-1) {              //Если текущей равен следующему, но ещё не конец массива
-                count++;
-            } else if (arr.get(i) == arr.get(i+1) && (i+1) == arr.size()-1) {       //Если текущей равен следующему и уже конец массива
-                System.out.println("Элемент " + arr.get(i) + " имеет " + (count+1) + " вхождений в массив");
-            } else if (arr.get(i) != arr.get(i+1) && (i+1) != arr.size()-1){        //Если текущей НЕ равен следующему, но ещё не конец массива
-                System.out.println("Элемент " + arr.get(i) + " имеет " + count + " вхождений в массив");
-                count = 1;
-            } else if (arr.get(i) != arr.get(i+1) && (i+1) == arr.size()-1) {       //Если текущей НЕ равен следующему и уже конец конец массива
-                System.out.println("Элемент " + arr.get(i) + " имеет " + count + " вхождений в массив");
-                System.out.println("Элемент " + arr.get(i+1) + " имеет 1 вхождение в массив");
+
+        System.out.println("\nПовторы элементов: ");
+
+        Map<String, Integer> map = new HashMap<>();
+        for (String s : arr) {
+            if (map.containsKey(s)) {
+                map.put(s, map.get(s)+1);
+            } else {
+                map.put(s, 1);
             }
+        }
+        for (Map.Entry<String,Integer> m: map.entrySet()) {
+            System.out.printf("Элемент %s повторяется %s раз \n", m.getKey(), m.getValue());
         }
     }
 }

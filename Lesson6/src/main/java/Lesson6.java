@@ -1,12 +1,14 @@
 import com.google.gson.Gson;
-
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 public class Lesson6 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException {
 
+        FillDB.createWeatherArchive();
         Gson g = new Gson();
         Forecast forecast = g.fromJson(Weather.getHTTP(),Forecast.class);
 
@@ -16,6 +18,7 @@ public class Lesson6 {
             System.out.println("В городе Оренбург на дату " + date + " ожидается " + forecast.daily.get(i).weather.get(0).description +
                     ", температура " + Math.round(forecast.daily.get(i).temp.day));
         }
+        FillDB.addData(forecast.daily.get(0).weather.get(0).description, (int) Math.round(forecast.daily.get(0).temp.day));
     }
 
     class Forecast {
